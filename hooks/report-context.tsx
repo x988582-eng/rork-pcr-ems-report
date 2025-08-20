@@ -26,82 +26,84 @@ const generateIncidentNumber = (): string => {
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 
+const createNewReport = (): Partial<PCRReport> => ({
+  id: Date.now().toString(),
+  createdAt: new Date().toISOString(),
+  dispatch: {
+    dateTime: new Date().toISOString(),
+    unitNumber: '112',
+    incidentNumber: generateIncidentNumber(),
+    location: '',
+    natureOfCall: '',
+    priority: ''
+  },
+  chiefComplaint: {
+    complaint: '',
+    onset: '',
+    duration: '',
+    severity: '',
+    quality: '',
+    radiation: '',
+    associatedSymptoms: '',
+    aggravatingFactors: '',
+    alleviatingFactors: ''
+  },
+  history: {
+    age: '',
+    gender: '',
+    allergies: '',
+    medications: '',
+    pastMedicalHistory: '',
+    lastOralIntake: '',
+    events: '',
+    pn_source: 'Patient',
+    pn_unobtainable: false,
+    pn_unobtainable_reason: '',
+    pn_chest_pain: false,
+    pn_sob: false,
+    pn_head_pain: false,
+    pn_neck_pain: false,
+    pn_back_pain: false,
+    pn_weakness: false,
+    pn_dizziness: false,
+    pn_nausea: false,
+    pn_vomiting: false,
+    pn_diarrhea: false
+  },
+  assessmentNotes: {
+    generalImpression: '',
+    levelOfConsciousness: '',
+    airway: '',
+    breathing: '',
+    circulation: '',
+    skinCondition: '',
+    pupils: '',
+    additionalFindings: ''
+  },
+  assessment: {
+    vitalSigns: [],
+    physicalExam: '',
+    workingDiagnosis: ''
+  },
+  treatment: {
+    interventions: [],
+    medications: [],
+    procedures: [],
+    response: ''
+  },
+  transport: {
+    destination: '',
+    transportMode: '',
+    position: '',
+    changesDuringTransport: '',
+    transferOfCare: '',
+    receivingProvider: ''
+  }
+});
+
 export const [ReportProvider, useReport] = createContextHook(() => {
   const [reports, setReports] = useState<PCRReport[]>([]);
-  const [currentReport, setCurrentReport] = useState<Partial<PCRReport>>({
-    id: Date.now().toString(),
-    createdAt: new Date().toISOString(),
-    dispatch: {
-      dateTime: new Date().toISOString(),
-      unitNumber: '',
-      incidentNumber: generateIncidentNumber(),
-      location: '',
-      natureOfCall: '',
-      priority: ''
-    },
-    chiefComplaint: {
-      complaint: '',
-      onset: '',
-      duration: '',
-      severity: '',
-      quality: '',
-      radiation: '',
-      associatedSymptoms: '',
-      aggravatingFactors: '',
-      alleviatingFactors: ''
-    },
-    history: {
-      age: '',
-      gender: '',
-      allergies: '',
-      medications: '',
-      pastMedicalHistory: '',
-      lastOralIntake: '',
-      events: '',
-      pn_source: 'Patient',
-      pn_unobtainable: false,
-      pn_unobtainable_reason: '',
-      pn_chest_pain: false,
-      pn_sob: false,
-      pn_head_pain: false,
-      pn_neck_pain: false,
-      pn_back_pain: false,
-      pn_weakness: false,
-      pn_dizziness: false,
-      pn_nausea: false,
-      pn_vomiting: false,
-      pn_diarrhea: false
-    },
-    assessmentNotes: {
-      generalImpression: '',
-      levelOfConsciousness: '',
-      airway: '',
-      breathing: '',
-      circulation: '',
-      skinCondition: '',
-      pupils: '',
-      additionalFindings: ''
-    },
-    assessment: {
-      vitalSigns: [],
-      physicalExam: '',
-      workingDiagnosis: ''
-    },
-    treatment: {
-      interventions: [],
-      medications: [],
-      procedures: [],
-      response: ''
-    },
-    transport: {
-      destination: '',
-      transportMode: '',
-      position: '',
-      changesDuringTransport: '',
-      transferOfCare: '',
-      receivingProvider: ''
-    }
-  });
+  const [currentReport, setCurrentReport] = useState<Partial<PCRReport>>(() => createNewReport());
   const [isLoading, setIsLoading] = useState(true);
 
   // Load saved reports and current report on mount
@@ -223,80 +225,7 @@ export const [ReportProvider, useReport] = createContextHook(() => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedReports));
       // Clear current report after saving
-      const newReport: Partial<PCRReport> = {
-        id: Date.now().toString(),
-        createdAt: new Date().toISOString(),
-        dispatch: {
-          dateTime: new Date().toISOString(),
-          unitNumber: '',
-          incidentNumber: generateIncidentNumber(),
-          location: '',
-          natureOfCall: '',
-          priority: ''
-        },
-        chiefComplaint: {
-          complaint: '',
-          onset: '',
-          duration: '',
-          severity: '',
-          quality: '',
-          radiation: '',
-          associatedSymptoms: '',
-          aggravatingFactors: '',
-          alleviatingFactors: ''
-        },
-        history: {
-          age: '',
-          gender: '',
-          allergies: '',
-          medications: '',
-          pastMedicalHistory: '',
-          lastOralIntake: '',
-          events: '',
-          pn_source: 'Patient',
-          pn_unobtainable: false,
-          pn_unobtainable_reason: '',
-          pn_chest_pain: false,
-          pn_sob: false,
-          pn_head_pain: false,
-          pn_neck_pain: false,
-          pn_back_pain: false,
-          pn_weakness: false,
-          pn_dizziness: false,
-          pn_nausea: false,
-          pn_vomiting: false,
-          pn_diarrhea: false
-        },
-        assessmentNotes: {
-          generalImpression: '',
-          levelOfConsciousness: '',
-          airway: '',
-          breathing: '',
-          circulation: '',
-          skinCondition: '',
-          pupils: '',
-          additionalFindings: ''
-        },
-        assessment: {
-          vitalSigns: [],
-          physicalExam: '',
-          workingDiagnosis: ''
-        },
-        treatment: {
-          interventions: [],
-          medications: [],
-          procedures: [],
-          response: ''
-        },
-        transport: {
-          destination: '',
-          transportMode: '',
-          position: '',
-          changesDuringTransport: '',
-          transferOfCare: '',
-          receivingProvider: ''
-        }
-      };
+      const newReport = createNewReport();
       setCurrentReport(newReport);
       await AsyncStorage.setItem(CURRENT_REPORT_KEY, JSON.stringify(newReport));
     } catch (error) {
@@ -315,83 +244,16 @@ export const [ReportProvider, useReport] = createContextHook(() => {
     }
   }, [reports]);
 
+
+
   const clearCurrentReport = useCallback(async () => {
-    const newReport: Partial<PCRReport> = {
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString(),
-      dispatch: {
-        dateTime: new Date().toISOString(),
-        unitNumber: '',
-        incidentNumber: generateIncidentNumber(),
-        location: '',
-        natureOfCall: '',
-        priority: ''
-      },
-      chiefComplaint: {
-        complaint: '',
-        onset: '',
-        duration: '',
-        severity: '',
-        quality: '',
-        radiation: '',
-        associatedSymptoms: '',
-        aggravatingFactors: '',
-        alleviatingFactors: ''
-      },
-      history: {
-        age: '',
-        gender: '',
-        allergies: '',
-        medications: '',
-        pastMedicalHistory: '',
-        lastOralIntake: '',
-        events: '',
-        pn_source: 'Patient',
-        pn_unobtainable: false,
-        pn_unobtainable_reason: '',
-        pn_chest_pain: false,
-        pn_sob: false,
-        pn_head_pain: false,
-        pn_neck_pain: false,
-        pn_back_pain: false,
-        pn_weakness: false,
-        pn_dizziness: false,
-        pn_nausea: false,
-        pn_vomiting: false,
-        pn_diarrhea: false
-      },
-      assessmentNotes: {
-        generalImpression: '',
-        levelOfConsciousness: '',
-        airway: '',
-        breathing: '',
-        circulation: '',
-        skinCondition: '',
-        pupils: '',
-        additionalFindings: ''
-      },
-      assessment: {
-        vitalSigns: [],
-        physicalExam: '',
-        workingDiagnosis: ''
-      },
-      treatment: {
-        interventions: [],
-        medications: [],
-        procedures: [],
-        response: ''
-      },
-      transport: {
-        destination: '',
-        transportMode: '',
-        position: '',
-        changesDuringTransport: '',
-        transferOfCare: '',
-        receivingProvider: ''
-      }
-    };
+    const newReport = createNewReport();
     setCurrentReport(newReport);
-    await AsyncStorage.setItem(CURRENT_REPORT_KEY, JSON.stringify(newReport));
+    try {
+      await AsyncStorage.setItem(CURRENT_REPORT_KEY, JSON.stringify(newReport));
+    } catch (error) {
+      console.error('Error clearing current report:', error);
+    }
   }, []);
 
   const loadReport = useCallback(async (report: PCRReport) => {
