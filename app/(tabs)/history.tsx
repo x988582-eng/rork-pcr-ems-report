@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert } from "react-native";
 import { FileText, Trash2 } from "lucide-react-native";
+import { useRouter } from "expo-router";
 import { useReport } from "@/hooks/report-context";
 import type { PCRReport } from "@/types/report";
 
 export default function HistoryScreen() {
-  const { reports, deleteReport } = useReport();
+  const { reports, deleteReport, loadReport } = useReport();
+  const router = useRouter();
 
   const handleDelete = (report: PCRReport) => {
     Alert.alert(
@@ -21,8 +23,17 @@ export default function HistoryScreen() {
     );
   };
 
+  const handleOpenReport = async (report: PCRReport) => {
+    await loadReport(report);
+    router.push('/(tabs)/(report)');
+  };
+
   const renderReport = ({ item }: { item: PCRReport }) => (
-    <View style={styles.reportCard}>
+    <TouchableOpacity 
+      style={styles.reportCard}
+      onPress={() => handleOpenReport(item)}
+      activeOpacity={0.7}
+    >
       <View style={styles.reportIcon}>
         <FileText size={24} color="#0066CC" />
       </View>
@@ -42,11 +53,14 @@ export default function HistoryScreen() {
       </View>
       <TouchableOpacity 
         style={styles.deleteButton}
-        onPress={() => handleDelete(item)}
+        onPress={(e) => {
+          e.stopPropagation();
+          handleDelete(item);
+        }}
       >
         <Trash2 size={20} color="#FF3B30" />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

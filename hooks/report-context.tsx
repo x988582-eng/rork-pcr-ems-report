@@ -57,7 +57,20 @@ export const [ReportProvider, useReport] = createContextHook(() => {
       medications: '',
       pastMedicalHistory: '',
       lastOralIntake: '',
-      events: ''
+      events: '',
+      pn_source: 'Patient',
+      pn_unobtainable: false,
+      pn_unobtainable_reason: '',
+      pn_chest_pain: false,
+      pn_sob: false,
+      pn_head_pain: false,
+      pn_neck_pain: false,
+      pn_back_pain: false,
+      pn_weakness: false,
+      pn_dizziness: false,
+      pn_nausea: false,
+      pn_vomiting: false,
+      pn_diarrhea: false
     },
     assessmentNotes: {
       generalImpression: '',
@@ -239,7 +252,20 @@ export const [ReportProvider, useReport] = createContextHook(() => {
           medications: '',
           pastMedicalHistory: '',
           lastOralIntake: '',
-          events: ''
+          events: '',
+          pn_source: 'Patient',
+          pn_unobtainable: false,
+          pn_unobtainable_reason: '',
+          pn_chest_pain: false,
+          pn_sob: false,
+          pn_head_pain: false,
+          pn_neck_pain: false,
+          pn_back_pain: false,
+          pn_weakness: false,
+          pn_dizziness: false,
+          pn_nausea: false,
+          pn_vomiting: false,
+          pn_diarrhea: false
         },
         assessmentNotes: {
           generalImpression: '',
@@ -319,7 +345,20 @@ export const [ReportProvider, useReport] = createContextHook(() => {
         medications: '',
         pastMedicalHistory: '',
         lastOralIntake: '',
-        events: ''
+        events: '',
+        pn_source: 'Patient',
+        pn_unobtainable: false,
+        pn_unobtainable_reason: '',
+        pn_chest_pain: false,
+        pn_sob: false,
+        pn_head_pain: false,
+        pn_neck_pain: false,
+        pn_back_pain: false,
+        pn_weakness: false,
+        pn_dizziness: false,
+        pn_nausea: false,
+        pn_vomiting: false,
+        pn_diarrhea: false
       },
       assessmentNotes: {
         generalImpression: '',
@@ -355,6 +394,11 @@ export const [ReportProvider, useReport] = createContextHook(() => {
     await AsyncStorage.setItem(CURRENT_REPORT_KEY, JSON.stringify(newReport));
   }, []);
 
+  const loadReport = useCallback(async (report: PCRReport) => {
+    setCurrentReport(report);
+    await AsyncStorage.setItem(CURRENT_REPORT_KEY, JSON.stringify(report));
+  }, []);
+
   return useMemo(() => ({
     reports,
     currentReport,
@@ -369,7 +413,8 @@ export const [ReportProvider, useReport] = createContextHook(() => {
     updateTransport,
     saveReport,
     deleteReport,
-    clearCurrentReport
+    clearCurrentReport,
+    loadReport
   }), [
     reports,
     currentReport,
@@ -384,6 +429,7 @@ export const [ReportProvider, useReport] = createContextHook(() => {
     updateTransport,
     saveReport,
     deleteReport,
-    clearCurrentReport
+    clearCurrentReport,
+    loadReport
   ]);
 });
