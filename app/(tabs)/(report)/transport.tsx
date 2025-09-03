@@ -28,7 +28,8 @@ export default function TransportScreen() {
     'Corewell Blodgett',
     'Univ. of Michigan Metro',
     'Holland Community Hospital',
-    'Zeeland Community Hospital'
+    'Zeeland Community Hospital',
+    'Refused Transport'
   ];
 
   return (
