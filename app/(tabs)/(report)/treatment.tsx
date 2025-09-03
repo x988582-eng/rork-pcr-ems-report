@@ -61,6 +61,20 @@ export default function TreatmentScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.form}>
+        {/* Patient Response */}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Patient Response to Treatment</Text>
+          <TextInput
+            style={[styles.input, styles.textArea]}
+            value={response}
+            onChangeText={setResponse}
+            placeholder="How did the patient respond to treatment?"
+            placeholderTextColor="#C7C7CC"
+            multiline
+            numberOfLines={4}
+          />
+        </View>
+
         {/* Interventions */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Interventions</Text>
@@ -148,19 +162,7 @@ export default function TreatmentScreen() {
           </View>
         </View>
 
-        {/* Patient Response */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Patient Response to Treatment</Text>
-          <TextInput
-            style={[styles.input, styles.textArea]}
-            value={response}
-            onChangeText={setResponse}
-            placeholder="How did the patient respond to treatment?"
-            placeholderTextColor="#C7C7CC"
-            multiline
-            numberOfLines={4}
-          />
-        </View>
+
       </View>
 
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
