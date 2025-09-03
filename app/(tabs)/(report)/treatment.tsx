@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity } from "react-native";
 import { useReport } from "@/hooks/report-context";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
 import { Plus, X } from "lucide-react-native";
 
@@ -24,6 +24,12 @@ export default function TreatmentScreen() {
   const [newIntervention, setNewIntervention] = useState('');
   const [newMedication, setNewMedication] = useState('');
   const [newProcedure, setNewProcedure] = useState('');
+
+  useEffect(() => {
+    if (interventions.length === 0) {
+      setInterventions(['Therapeutic communication', 'Position of comfort']);
+    }
+  }, []);
 
   const addIntervention = () => {
     if (!newIntervention.trim()) return;
