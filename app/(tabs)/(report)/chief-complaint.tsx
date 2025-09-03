@@ -23,22 +23,31 @@ export default function ChiefComplaintScreen() {
     const numbers = input.replace(/\D/g, '');
     
     if (numbers.length === 0) return '';
-    if (numbers.length <= 2) {
-      const hour = parseInt(numbers);
-      if (hour > 23) return '23:';
-      return numbers + ':';
-    }
-    if (numbers.length <= 4) {
-      const hour = parseInt(numbers.substring(0, 2));
-      const minute = parseInt(numbers.substring(2));
-      
-      const validHour = hour > 23 ? 23 : hour;
-      const validMinute = minute > 59 ? 59 : minute;
-      
-      return String(validHour).padStart(2, '0') + ':' + String(validMinute).padStart(2, '0');
+    
+    // For 1 digit, just return it
+    if (numbers.length === 1) {
+      return numbers;
     }
     
-    // If more than 4 digits, take first 4
+    // For 2 digits, add colon if hour is valid
+    if (numbers.length === 2) {
+      const hour = parseInt(numbers);
+      if (hour > 23) {
+        return '23:';
+      }
+      return numbers + ':';
+    }
+    
+    // For 3 digits, format as HH:M
+    if (numbers.length === 3) {
+      const hour = parseInt(numbers.substring(0, 2));
+      const minute = numbers.substring(2, 3);
+      
+      const validHour = hour > 23 ? 23 : hour;
+      return String(validHour).padStart(2, '0') + ':' + minute;
+    }
+    
+    // For 4+ digits, format as HH:MM
     const hour = parseInt(numbers.substring(0, 2));
     const minute = parseInt(numbers.substring(2, 4));
     
