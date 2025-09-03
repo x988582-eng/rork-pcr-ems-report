@@ -10,6 +10,7 @@ export default function HistoryScreen() {
     age: currentReport.history?.age || '',
     gender: currentReport.history?.gender || '',
     allergies: currentReport.history?.allergies || '',
+    allergyType: currentReport.history?.allergyType || 'custom',
     medications: currentReport.history?.medications || '',
     pastMedicalHistory: currentReport.history?.pastMedicalHistory || '',
     lastOralIntake: currentReport.history?.lastOralIntake || '',
@@ -77,15 +78,44 @@ export default function HistoryScreen() {
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Allergies</Text>
-          <TextInput
-            style={[styles.input, styles.textArea]}
-            value={formData.allergies}
-            onChangeText={(text) => setFormData({...formData, allergies: text})}
-            placeholder="List allergies or NKDA"
-            placeholderTextColor="#C7C7CC"
-            multiline
-            numberOfLines={2}
-          />
+          <View style={styles.allergyButtons}>
+            {['NKDA', 'See Med List', 'Custom'].map((type) => (
+              <TouchableOpacity
+                key={type}
+                style={[
+                  styles.allergyButton,
+                  formData.allergyType === type.toLowerCase().replace(' ', '') && styles.allergyButtonActive
+                ]}
+                onPress={() => {
+                  const allergyType = type.toLowerCase().replace(' ', '');
+                  setFormData({
+                    ...formData, 
+                    allergyType,
+                    allergies: allergyType === 'nkda' ? 'NKDA' : allergyType === 'seemedlist' ? 'See Med List' : formData.allergies
+                  });
+                }}
+              >
+                <Text style={[
+                  styles.allergyButtonText,
+                  formData.allergyType === type.toLowerCase().replace(' ', '') && styles.allergyButtonTextActive
+                ]}>
+                  {type}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          
+          {formData.allergyType === 'custom' && (
+            <TextInput
+              style={[styles.input, styles.textArea, { marginTop: 12 }]}
+              value={formData.allergies}
+              onChangeText={(text) => setFormData({...formData, allergies: text})}
+              placeholder="List specific allergies"
+              placeholderTextColor="#C7C7CC"
+              multiline
+              numberOfLines={2}
+            />
+          )}
         </View>
 
         <View style={styles.inputGroup}>
@@ -377,5 +407,32 @@ const styles = StyleSheet.create({
     color: "#8E8E93",
     marginBottom: 12,
     fontStyle: "italic",
+  },
+  allergyButtons: {
+    flexDirection: "row",
+    gap: 8,
+    marginBottom: 4,
+  },
+  allergyButton: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: "#E5E5EA",
+    borderRadius: 8,
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+  },
+  allergyButtonActive: {
+    backgroundColor: "#0066CC",
+    borderColor: "#0066CC",
+  },
+  allergyButtonText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#000000",
+  },
+  allergyButtonTextActive: {
+    color: "#FFFFFF",
   },
 });

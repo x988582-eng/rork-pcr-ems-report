@@ -23,6 +23,7 @@ export interface PatientHistory {
   age: string;
   gender: string;
   allergies: string;
+  allergyType?: string;
   medications: string;
   pastMedicalHistory: string;
   lastOralIntake: string;
