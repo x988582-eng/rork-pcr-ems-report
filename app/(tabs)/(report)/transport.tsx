@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity } from "react-native";
 import { useReport } from "@/hooks/report-context";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
 
 export default function TransportScreen() {
@@ -14,6 +14,17 @@ export default function TransportScreen() {
     transferOfCare: currentReport.transport?.transferOfCare || '',
     receivingProvider: currentReport.transport?.receivingProvider || '',
   });
+
+  const refusalText = "Patient found alert, oriented, and deemed capable of medical decision-making. Risks, benefits, and potential complications of refusal were explained in detail. Patient verbalized understanding, demonstrated capacity, and signed AMA refusal. Advised to seek care immediately if condition worsens, and reminded 911 may be re-contacted at any time. Documentation and witness signatures obtained.";
+
+  useEffect(() => {
+    if (formData.destination === 'Refused Transport') {
+      setFormData(prev => ({
+        ...prev,
+        transferOfCare: refusalText
+      }));
+    }
+  }, [formData.destination]);
 
   const handleSave = () => {
     updateTransport(formData);
@@ -46,7 +57,13 @@ export default function TransportScreen() {
                     styles.facilityButton,
                     formData.destination === facility && styles.facilityButtonActive
                   ]}
-                  onPress={() => setFormData({...formData, destination: facility})}
+                  onPress={() => {
+                    const newFormData = {...formData, destination: facility};
+                    if (facility === 'Refused Transport') {
+                      newFormData.transferOfCare = refusalText;
+                    }
+                    setFormData(newFormData);
+                  }}
                 >
                   <Text style={[
                     styles.facilityButtonText,
