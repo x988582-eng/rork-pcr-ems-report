@@ -7,9 +7,14 @@ export default function DispatchScreen() {
   const { currentReport, updateDispatch } = useReport();
   const router = useRouter();
   
+  const getCurrentDate = () => {
+    const now = new Date();
+    return now.toISOString().split('T')[0]; // yyyy-mm-dd format
+  };
+
   const [formData, setFormData] = useState({
     unitNumber: currentReport.dispatch?.unitNumber || '112',
-    dispatchTime: currentReport.dispatch?.dispatchTime || '',
+    dispatchTime: currentReport.dispatch?.dispatchTime || getCurrentDate(),
     location: currentReport.dispatch?.location || '',
     natureOfCall: currentReport.dispatch?.natureOfCall || '',
     priority: currentReport.dispatch?.priority || '',
