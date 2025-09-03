@@ -23,6 +23,7 @@ export default function AssessmentNotesScreen() {
   };
 
   const locOptions = ['Alert', 'Verbal', 'Pain', 'Unresponsive'];
+  const airwayOptions = ['Patent', 'Obstructed', 'Maintained', 'Custom'];
 
   return (
     <ScrollView style={styles.container}>
@@ -81,13 +82,34 @@ export default function AssessmentNotesScreen() {
           
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Airway *</Text>
-            <TextInput
-              style={styles.input}
-              value={formData.airway}
-              onChangeText={(text) => setFormData({...formData, airway: text})}
-              placeholder="e.g., Patent, Obstructed, Maintained"
-              placeholderTextColor="#C7C7CC"
-            />
+            <View style={styles.buttonRow}>
+              {airwayOptions.map((option) => (
+                <TouchableOpacity
+                  key={option}
+                  style={[
+                    styles.optionButton,
+                    formData.airway === option && styles.optionButtonActive
+                  ]}
+                  onPress={() => setFormData({...formData, airway: option})}
+                >
+                  <Text style={[
+                    styles.optionButtonText,
+                    formData.airway === option && styles.optionButtonTextActive
+                  ]}>
+                    {option}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            {formData.airway === 'Custom' && (
+              <TextInput
+                style={[styles.input, styles.customInput]}
+                value={formData.airway === 'Custom' ? '' : formData.airway}
+                onChangeText={(text) => setFormData({...formData, airway: text})}
+                placeholder="Enter custom airway status"
+                placeholderTextColor="#C7C7CC"
+              />
+            )}
           </View>
 
           <View style={styles.inputGroup}>
@@ -212,6 +234,9 @@ const styles = StyleSheet.create({
   },
   optionButtonTextActive: {
     color: "#FFFFFF",
+  },
+  customInput: {
+    marginTop: 8,
   },
   saveButton: {
     margin: 20,
