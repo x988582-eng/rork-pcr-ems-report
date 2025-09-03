@@ -14,7 +14,7 @@ export default function AssessmentNotesScreen() {
     circulation: currentReport.assessmentNotes?.circulation || '',
     skinCondition: currentReport.assessmentNotes?.skinCondition || '',
     pupils: currentReport.assessmentNotes?.pupils || '',
-    additionalFindings: currentReport.assessmentNotes?.additionalFindings || '',
+    additionalFindings: currentReport.assessmentNotes?.additionalFindings || 'Events once EMS arrived and during transport: ',
   });
 
   const handleSave = () => {
