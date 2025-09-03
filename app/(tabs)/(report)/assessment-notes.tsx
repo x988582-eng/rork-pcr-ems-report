@@ -41,6 +41,19 @@ export default function AssessmentNotesScreen() {
         </View>
 
         <View style={styles.inputGroup}>
+          <Text style={styles.label}>Additional Findings</Text>
+          <TextInput
+            style={[styles.input, styles.textArea]}
+            value={formData.additionalFindings}
+            onChangeText={(text) => setFormData({...formData, additionalFindings: text})}
+            placeholder="Other notable findings"
+            placeholderTextColor="#C7C7CC"
+            multiline
+            numberOfLines={3}
+          />
+        </View>
+
+        <View style={styles.inputGroup}>
           <Text style={styles.label}>Level of Consciousness (AVPU) *</Text>
           <View style={styles.buttonRow}>
             {locOptions.map((option) => (
@@ -119,19 +132,6 @@ export default function AssessmentNotesScreen() {
             onChangeText={(text) => setFormData({...formData, pupils: text})}
             placeholder="e.g., PERRL, Fixed, Dilated"
             placeholderTextColor="#C7C7CC"
-          />
-        </View>
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Additional Findings</Text>
-          <TextInput
-            style={[styles.input, styles.textArea]}
-            value={formData.additionalFindings}
-            onChangeText={(text) => setFormData({...formData, additionalFindings: text})}
-            placeholder="Other notable findings"
-            placeholderTextColor="#C7C7CC"
-            multiline
-            numberOfLines={3}
           />
         </View>
       </View>
