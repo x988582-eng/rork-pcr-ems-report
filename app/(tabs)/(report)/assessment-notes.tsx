@@ -26,6 +26,7 @@ export default function AssessmentNotesScreen() {
   const airwayOptions = ['Patent', 'Obstructed', 'Maintained', 'Custom'];
   const breathingOptions = ['Normal', 'Labored', 'Absent', 'Custom'];
   const circulationOptions = ['Normal', 'Weak', 'Absent', 'Custom'];
+  const skinConditionOptions = ['Warm/Dry', 'Cool/Clammy', 'Cyanotic', 'Custom'];
 
   return (
     <ScrollView style={styles.container}>
@@ -181,13 +182,34 @@ export default function AssessmentNotesScreen() {
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Skin Condition</Text>
-          <TextInput
-            style={styles.input}
-            value={formData.skinCondition}
-            onChangeText={(text) => setFormData({...formData, skinCondition: text})}
-            placeholder="e.g., Warm/Dry, Cool/Clammy, Cyanotic"
-            placeholderTextColor="#C7C7CC"
-          />
+          <View style={styles.buttonRow}>
+            {skinConditionOptions.map((option) => (
+              <TouchableOpacity
+                key={option}
+                style={[
+                  styles.optionButton,
+                  formData.skinCondition === option && styles.optionButtonActive
+                ]}
+                onPress={() => setFormData({...formData, skinCondition: option})}
+              >
+                <Text style={[
+                  styles.optionButtonText,
+                  formData.skinCondition === option && styles.optionButtonTextActive
+                ]}>
+                  {option}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          {formData.skinCondition === 'Custom' && (
+            <TextInput
+              style={[styles.input, styles.customInput]}
+              value={formData.skinCondition === 'Custom' ? '' : formData.skinCondition}
+              onChangeText={(text) => setFormData({...formData, skinCondition: text})}
+              placeholder="Enter custom skin condition"
+              placeholderTextColor="#C7C7CC"
+            />
+          )}
         </View>
 
         <View style={styles.inputGroup}>
