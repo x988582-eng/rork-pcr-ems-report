@@ -29,6 +29,9 @@ export default function TreatmentScreen() {
     if (interventions.length === 0) {
       setInterventions(['Therapeutic communication', 'Position of comfort']);
     }
+    if (procedures.length === 0) {
+      setProcedures(['Primary assessment', 'Vital signs']);
+    }
   }, []);
 
   const addIntervention = () => {
