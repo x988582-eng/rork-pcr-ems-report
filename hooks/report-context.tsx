@@ -43,6 +43,7 @@ const createNewReport = (): Partial<PCRReport> => ({
     gender: '',
     allergies: '',
     medications: '',
+    medicationType: 'custom',
     pastMedicalHistory: '',
     lastOralIntake: '',
     events: '',

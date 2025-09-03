@@ -12,6 +12,7 @@ export default function HistoryScreen() {
     allergies: currentReport.history?.allergies || '',
     allergyType: currentReport.history?.allergyType || 'custom',
     medications: currentReport.history?.medications || '',
+    medicationType: currentReport.history?.medicationType || 'custom',
     pastMedicalHistory: currentReport.history?.pastMedicalHistory || '',
     lastOralIntake: currentReport.history?.lastOralIntake || '',
     events: currentReport.history?.events || '',
@@ -120,15 +121,44 @@ export default function HistoryScreen() {
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Medications</Text>
-          <TextInput
-            style={[styles.input, styles.textArea]}
-            value={formData.medications}
-            onChangeText={(text) => setFormData({...formData, medications: text})}
-            placeholder="Current medications"
-            placeholderTextColor="#C7C7CC"
-            multiline
-            numberOfLines={3}
-          />
+          <View style={styles.medicationButtons}>
+            {['None', 'Refused', 'See Med List', 'Custom'].map((type) => (
+              <TouchableOpacity
+                key={type}
+                style={[
+                  styles.medicationButton,
+                  formData.medicationType === type.toLowerCase().replace(' ', '') && styles.medicationButtonActive
+                ]}
+                onPress={() => {
+                  const medicationType = type.toLowerCase().replace(' ', '');
+                  setFormData({
+                    ...formData, 
+                    medicationType,
+                    medications: medicationType === 'none' ? 'None' : medicationType === 'refused' ? 'Refused' : medicationType === 'seemedlist' ? 'See Med List' : formData.medications
+                  });
+                }}
+              >
+                <Text style={[
+                  styles.medicationButtonText,
+                  formData.medicationType === type.toLowerCase().replace(' ', '') && styles.medicationButtonTextActive
+                ]}>
+                  {type}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          
+          {formData.medicationType === 'custom' && (
+            <TextInput
+              style={[styles.input, styles.textArea, { marginTop: 12 }]}
+              value={formData.medications}
+              onChangeText={(text) => setFormData({...formData, medications: text})}
+              placeholder="List current medications"
+              placeholderTextColor="#C7C7CC"
+              multiline
+              numberOfLines={3}
+            />
+          )}
         </View>
 
         <View style={styles.inputGroup}>
@@ -433,6 +463,34 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
   allergyButtonTextActive: {
+    color: "#FFFFFF",
+  },
+  medicationButtons: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 4,
+  },
+  medicationButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: "#E5E5EA",
+    borderRadius: 8,
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    minWidth: 80,
+  },
+  medicationButtonActive: {
+    backgroundColor: "#0066CC",
+    borderColor: "#0066CC",
+  },
+  medicationButtonText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#000000",
+  },
+  medicationButtonTextActive: {
     color: "#FFFFFF",
   },
 });

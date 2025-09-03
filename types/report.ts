@@ -25,6 +25,7 @@ export interface PatientHistory {
   allergies: string;
   allergyType?: string;
   medications: string;
+  medicationType?: string;
   pastMedicalHistory: string;
   lastOralIntake: string;
   events: string; // Events leading to injury/illness
