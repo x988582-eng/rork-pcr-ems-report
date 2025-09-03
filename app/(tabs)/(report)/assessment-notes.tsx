@@ -7,7 +7,7 @@ export default function AssessmentNotesScreen() {
   const { currentReport, updateAssessmentNotes } = useReport();
   const router = useRouter();
   const [formData, setFormData] = useState({
-    generalImpression: currentReport.assessmentNotes?.generalImpression || '',
+    generalImpression: currentReport.assessmentNotes?.generalImpression || 'EMS arrived to find patient ',
     levelOfConsciousness: currentReport.assessmentNotes?.levelOfConsciousness || '',
     airway: currentReport.assessmentNotes?.airway || '',
     breathing: currentReport.assessmentNotes?.breathing || '',
