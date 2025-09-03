@@ -7,17 +7,9 @@ export default function DispatchScreen() {
   const { currentReport, updateDispatch } = useReport();
   const router = useRouter();
   
-  const getCurrentDate = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-  
   const [formData, setFormData] = useState({
     unitNumber: currentReport.dispatch?.unitNumber || '112',
-    dispatchTime: currentReport.dispatch?.dispatchTime || getCurrentDate(),
+    incidentNumber: currentReport.dispatch?.incidentNumber || '',
     location: currentReport.dispatch?.location || '',
     natureOfCall: currentReport.dispatch?.natureOfCall || '',
     priority: currentReport.dispatch?.priority || '',
@@ -46,12 +38,12 @@ export default function DispatchScreen() {
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Dispatch Time *</Text>
+          <Text style={styles.label}>Incident Number *</Text>
           <TextInput
             style={styles.input}
-            value={formData.dispatchTime}
-            onChangeText={(text) => setFormData({...formData, dispatchTime: text})}
-            placeholder="e.g., 2024-01-15"
+            value={formData.incidentNumber}
+            onChangeText={(text) => setFormData({...formData, incidentNumber: text})}
+            placeholder="e.g., 2024-001234"
             placeholderTextColor="#C7C7CC"
           />
         </View>
