@@ -62,6 +62,11 @@ export default function ChiefComplaintScreen() {
     setFormData({...formData, onset: formatted});
   };
 
+  const handleDurationChange = (text: string) => {
+    const formatted = formatTime(text);
+    setFormData({...formData, duration: formatted});
+  };
+
   const handleSave = () => {
     updateChiefComplaint(formData);
     router.back();
@@ -102,9 +107,11 @@ export default function ChiefComplaintScreen() {
             <TextInput
               style={styles.input}
               value={formData.duration}
-              onChangeText={(text) => setFormData({...formData, duration: text})}
-              placeholder="e.g., 30 minutes"
+              onChangeText={handleDurationChange}
+              placeholder="HH:MM (24-hr)"
               placeholderTextColor="#C7C7CC"
+              keyboardType="number-pad"
+              maxLength={5}
             />
           </View>
         </View>
