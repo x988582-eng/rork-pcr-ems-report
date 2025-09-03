@@ -22,7 +22,7 @@ const createNewReport = (): Partial<PCRReport> => ({
   dispatch: {
     dateTime: new Date().toISOString(),
     unitNumber: '112',
-    incidentNumber: '',
+    dispatchTime: '',
     location: '',
     natureOfCall: '',
     priority: ''
