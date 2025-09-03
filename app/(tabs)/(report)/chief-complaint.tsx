@@ -41,7 +41,7 @@ export default function ChiefComplaintScreen() {
 
         <View style={styles.row}>
           <View style={[styles.inputGroup, styles.halfWidth]}>
-            <Text style={styles.label}>Onset (&lt; Dispatch Time) *</Text>
+            <Text style={styles.label}>Onset *</Text>
             <TextInput
               style={styles.input}
               value={formData.onset}
