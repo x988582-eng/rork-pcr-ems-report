@@ -118,7 +118,7 @@ export default function ChiefComplaintScreen() {
 
         <View style={styles.row}>
           <View style={[styles.inputGroup, styles.halfWidth]}>
-            <Text style={styles.label}>Severity (1-10) *</Text>
+            <Text style={styles.label}>Severity (1-10)</Text>
             <TextInput
               style={styles.input}
               value={formData.severity}
