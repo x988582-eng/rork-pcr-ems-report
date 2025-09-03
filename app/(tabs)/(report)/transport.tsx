@@ -6,16 +6,18 @@ import { useRouter } from "expo-router";
 export default function TransportScreen() {
   const { currentReport, updateTransport } = useReport();
   const router = useRouter();
+  
+  const defaultTransferText = "Patient care, assessment findings, and all pertinent history were verbally communicated to receiving facility staff. Transfer of care given to [receiving RN/MD/PA/NP] at [facility name/ED/department]. Patient left in stable condition at time of transfer with all personal belongings. Documentation and signatures obtained as required.";
+  const refusalText = "Patient found alert, oriented, and deemed capable of medical decision-making. Risks, benefits, and potential complications of refusal were explained in detail. Patient verbalized understanding, demonstrated capacity, and signed AMA refusal. Advised to seek care immediately if condition worsens, and reminded 911 may be re-contacted at any time. Documentation and witness signatures obtained.";
+  
   const [formData, setFormData] = useState({
     destination: currentReport.transport?.destination || '',
     transportMode: currentReport.transport?.transportMode || '',
     position: currentReport.transport?.position || '',
     changesDuringTransport: currentReport.transport?.changesDuringTransport || '',
-    transferOfCare: currentReport.transport?.transferOfCare || '',
+    transferOfCare: currentReport.transport?.transferOfCare || defaultTransferText,
     receivingProvider: currentReport.transport?.receivingProvider || '',
   });
-
-  const refusalText = "Patient found alert, oriented, and deemed capable of medical decision-making. Risks, benefits, and potential complications of refusal were explained in detail. Patient verbalized understanding, demonstrated capacity, and signed AMA refusal. Advised to seek care immediately if condition worsens, and reminded 911 may be re-contacted at any time. Documentation and witness signatures obtained.";
 
   useEffect(() => {
     if (formData.destination === 'Refused Transport') {
