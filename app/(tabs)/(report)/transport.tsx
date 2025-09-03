@@ -61,7 +61,7 @@ export default function TransportScreen() {
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Transport Mode *</Text>
+          <Text style={styles.label}>Transport Mode</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={styles.buttonRow}>
               {transportModes.map((mode) => (
