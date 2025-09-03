@@ -3,6 +3,7 @@ export interface DispatchInfo {
   unitNumber: string;
   dispatchTime: string;
   location: string;
+  locationCustom?: string;
   natureOfCall: string;
   priority: string;
 }

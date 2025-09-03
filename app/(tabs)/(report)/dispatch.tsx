@@ -16,13 +16,27 @@ export default function DispatchScreen() {
     unitNumber: currentReport.dispatch?.unitNumber || '112',
     dispatchTime: currentReport.dispatch?.dispatchTime || getCurrentDate(),
     location: currentReport.dispatch?.location || '',
+    locationCustom: currentReport.dispatch?.locationCustom || '',
     natureOfCall: currentReport.dispatch?.natureOfCall || '',
     priority: currentReport.dispatch?.priority || '',
   });
 
+  const locationOptions = ['Residence', 'Business', 'Roadway/Field', 'Custom'];
+  const selectedLocation = locationOptions.includes(formData.location) ? formData.location : 'Custom';
+  
+  const handleLocationSelect = (location: string) => {
+    if (location === 'Custom') {
+      setFormData({...formData, location: formData.locationCustom || ''});
+    } else {
+      setFormData({...formData, location});
+    }
+  };
+
   const handleSave = () => {
+    const { locationCustom, ...saveData } = formData;
     updateDispatch({
-      ...formData,
+      ...saveData,
+      locationCustom,
       dateTime: currentReport.dispatch?.dateTime || new Date().toISOString()
     });
     router.back();
@@ -55,15 +69,42 @@ export default function DispatchScreen() {
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Location *</Text>
-          <TextInput
-            style={[styles.input, styles.textArea]}
-            value={formData.location}
-            onChangeText={(text) => setFormData({...formData, location: text})}
-            placeholder="Full address or location description"
-            placeholderTextColor="#C7C7CC"
-            multiline
-            numberOfLines={3}
-          />
+          <View style={styles.locationButtons}>
+            {locationOptions.map((location) => (
+              <TouchableOpacity
+                key={location}
+                style={[
+                  styles.locationButton,
+                  selectedLocation === location && styles.locationButtonActive
+                ]}
+                onPress={() => handleLocationSelect(location)}
+              >
+                <Text style={[
+                  styles.locationButtonText,
+                  selectedLocation === location && styles.locationButtonTextActive
+                ]}>
+                  {location}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          {selectedLocation === 'Custom' && (
+            <TextInput
+              style={[styles.input, styles.textArea, { marginTop: 10 }]}
+              value={selectedLocation === 'Custom' ? formData.location : formData.locationCustom}
+              onChangeText={(text) => {
+                if (selectedLocation === 'Custom') {
+                  setFormData({...formData, location: text, locationCustom: text});
+                } else {
+                  setFormData({...formData, locationCustom: text});
+                }
+              }}
+              placeholder="Full address or location description"
+              placeholderTextColor="#C7C7CC"
+              multiline
+              numberOfLines={3}
+            />
+          )}
         </View>
 
         <View style={styles.inputGroup}>
@@ -165,6 +206,32 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
   priorityButtonTextActive: {
+    color: "#FFFFFF",
+  },
+  locationButtons: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  locationButton: {
+    flex: 1,
+    minWidth: "45%",
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#E5E5EA",
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  locationButtonActive: {
+    backgroundColor: "#0066CC",
+    borderColor: "#0066CC",
+  },
+  locationButtonText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#000000",
+  },
+  locationButtonTextActive: {
     color: "#FFFFFF",
   },
   saveButton: {
