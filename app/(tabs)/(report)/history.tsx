@@ -121,32 +121,34 @@ export default function HistoryScreen() {
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Medications</Text>
-          <View style={styles.medicationButtons}>
-            {['None', 'Refused', 'See Med List', 'Custom'].map((type) => (
-              <TouchableOpacity
-                key={type}
-                style={[
-                  styles.medicationButton,
-                  formData.medicationType === type.toLowerCase().replace(' ', '') && styles.medicationButtonActive
-                ]}
-                onPress={() => {
-                  const medicationType = type.toLowerCase().replace(' ', '');
-                  setFormData({
-                    ...formData, 
-                    medicationType,
-                    medications: medicationType === 'none' ? 'None' : medicationType === 'refused' ? 'Refused' : medicationType === 'seemedlist' ? 'See Med List' : formData.medications
-                  });
-                }}
-              >
-                <Text style={[
-                  styles.medicationButtonText,
-                  formData.medicationType === type.toLowerCase().replace(' ', '') && styles.medicationButtonTextActive
-                ]}>
-                  {type}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={styles.buttonRow}>
+              {['None', 'Refused', 'See Med List', 'Custom'].map((type) => (
+                <TouchableOpacity
+                  key={type}
+                  style={[
+                    styles.medicationButton,
+                    formData.medicationType === type.toLowerCase().replace(' ', '') && styles.medicationButtonActive
+                  ]}
+                  onPress={() => {
+                    const medicationType = type.toLowerCase().replace(' ', '');
+                    setFormData({
+                      ...formData, 
+                      medicationType,
+                      medications: medicationType === 'none' ? 'None' : medicationType === 'refused' ? 'Refused' : medicationType === 'seemedlist' ? 'See Med List' : formData.medications
+                    });
+                  }}
+                >
+                  <Text style={[
+                    styles.medicationButtonText,
+                    formData.medicationType === type.toLowerCase().replace(' ', '') && styles.medicationButtonTextActive
+                  ]}>
+                    {type}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </ScrollView>
           
           {formData.medicationType === 'custom' && (
             <TextInput
@@ -465,21 +467,19 @@ const styles = StyleSheet.create({
   allergyButtonTextActive: {
     color: "#FFFFFF",
   },
-  medicationButtons: {
+  buttonRow: {
     flexDirection: "row",
-    flexWrap: "wrap",
     gap: 8,
-    marginBottom: 4,
   },
   medicationButton: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
     paddingVertical: 10,
     borderWidth: 1,
     borderColor: "#E5E5EA",
     borderRadius: 8,
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    minWidth: 80,
+    minWidth: 100,
   },
   medicationButtonActive: {
     backgroundColor: "#0066CC",
