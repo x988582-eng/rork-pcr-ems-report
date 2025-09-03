@@ -64,7 +64,7 @@ export function generateNarrative(report: Partial<PCRReport>): string {
     const d = report.dispatch;
     if (d.dateTime) sections.push(`**Date/Time:** ${new Date(d.dateTime).toLocaleString()}`);
     if (d.unitNumber) sections.push(`**Unit:** ${d.unitNumber}`);
-    if (d.incidentNumber) sections.push(`**Incident #:** ${d.incidentNumber}`);
+    if (d.dispatchTime) sections.push(`**Dispatch Time:** ${d.dispatchTime}`);
     if (d.location) sections.push(`**Location:** ${d.location}`);
     if (d.natureOfCall) sections.push(`**Nature of Call:** ${d.natureOfCall}`);
     if (d.priority) sections.push(`**Priority:** ${d.priority}`);

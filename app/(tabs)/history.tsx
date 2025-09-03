@@ -11,7 +11,7 @@ export default function HistoryScreen() {
   const handleDelete = (report: PCRReport) => {
     Alert.alert(
       'Delete Report',
-      `Delete report ${report.dispatch?.incidentNumber || report.id}?`,
+      `Delete report ${report.dispatch?.dispatchTime || report.id}?`,
       [
         { text: 'Cancel', style: 'cancel' },
         { 
@@ -39,7 +39,7 @@ export default function HistoryScreen() {
       </View>
       <View style={styles.reportContent}>
         <Text style={styles.reportTitle}>
-          {item.dispatch?.incidentNumber || `Report ${item.id.slice(-6)}`}
+          {item.dispatch?.dispatchTime || `Report ${item.id.slice(-6)}`}
         </Text>
         <Text style={styles.reportDate}>
           {new Date(item.createdAt).toLocaleDateString()} • {new Date(item.createdAt).toLocaleTimeString()}

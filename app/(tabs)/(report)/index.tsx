@@ -42,7 +42,7 @@ export default function ReportScreen() {
   
   const checkDispatchComplete = () => {
     const d = currentReport.dispatch;
-    return !!(d?.unitNumber && d?.incidentNumber && d?.location && d?.natureOfCall);
+    return !!(d?.unitNumber && d?.dispatchTime && d?.location && d?.natureOfCall);
   };
   
   const checkChiefComplaintComplete = () => {
@@ -80,7 +80,7 @@ export default function ReportScreen() {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Current Report</Text>
         <Text style={styles.headerSubtitle}>
-          {currentReport.dispatch?.incidentNumber || 'New Report'} • {new Date(currentReport.createdAt || '').toLocaleDateString()}
+          {currentReport.dispatch?.dispatchTime || 'New Report'} • {new Date(currentReport.createdAt || '').toLocaleDateString()}
         </Text>
       </View>
       
@@ -89,7 +89,7 @@ export default function ReportScreen() {
           title="1. Dispatch Information"
           route="dispatch"
           isComplete={checkDispatchComplete()}
-          description="Unit, incident number, location, nature of call"
+          description="Unit, dispatch time, location, nature of call"
         />
         
         <SectionItem 
