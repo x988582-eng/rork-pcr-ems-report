@@ -27,6 +27,7 @@ export default function AssessmentNotesScreen() {
   const breathingOptions = ['Normal', 'Labored', 'Absent', 'Custom'];
   const circulationOptions = ['Normal', 'Weak', 'Absent', 'Custom'];
   const skinConditionOptions = ['Warm/Dry', 'Cool/Clammy', 'Cyanotic', 'Custom'];
+  const pupilsOptions = ['PERRL', 'Fixed', 'Dilated', 'Custom'];
 
   return (
     <ScrollView style={styles.container}>
@@ -214,13 +215,34 @@ export default function AssessmentNotesScreen() {
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Pupils</Text>
-          <TextInput
-            style={styles.input}
-            value={formData.pupils}
-            onChangeText={(text) => setFormData({...formData, pupils: text})}
-            placeholder="e.g., PERRL, Fixed, Dilated"
-            placeholderTextColor="#C7C7CC"
-          />
+          <View style={styles.buttonRow}>
+            {pupilsOptions.map((option) => (
+              <TouchableOpacity
+                key={option}
+                style={[
+                  styles.optionButton,
+                  formData.pupils === option && styles.optionButtonActive
+                ]}
+                onPress={() => setFormData({...formData, pupils: option})}
+              >
+                <Text style={[
+                  styles.optionButtonText,
+                  formData.pupils === option && styles.optionButtonTextActive
+                ]}>
+                  {option}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          {formData.pupils === 'Custom' && (
+            <TextInput
+              style={[styles.input, styles.customInput]}
+              value={formData.pupils === 'Custom' ? '' : formData.pupils}
+              onChangeText={(text) => setFormData({...formData, pupils: text})}
+              placeholder="Enter custom pupils status"
+              placeholderTextColor="#C7C7CC"
+            />
+          )}
         </View>
       </View>
 
