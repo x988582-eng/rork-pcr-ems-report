@@ -13,7 +13,7 @@ export default function HistoryScreen() {
     allergyType: currentReport.history?.allergyType || 'custom',
     medications: currentReport.history?.medications || '',
     medicationType: currentReport.history?.medicationType || 'custom',
-    pastMedicalHistory: currentReport.history?.pastMedicalHistory || '',
+    pastMedicalHistory: currentReport.history?.pastMedicalHistory || 'see medical history record',
     lastOralIntake: currentReport.history?.lastOralIntake || '',
     events: currentReport.history?.events || '',
     // Pertinent Negatives
