@@ -25,6 +25,7 @@ export default function AssessmentNotesScreen() {
   const locOptions = ['Alert', 'Verbal', 'Pain', 'Unresponsive'];
   const airwayOptions = ['Patent', 'Obstructed', 'Maintained', 'Custom'];
   const breathingOptions = ['Normal', 'Labored', 'Absent', 'Custom'];
+  const circulationOptions = ['Normal', 'Weak', 'Absent', 'Custom'];
 
   return (
     <ScrollView style={styles.container}>
@@ -147,13 +148,34 @@ export default function AssessmentNotesScreen() {
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Circulation *</Text>
-            <TextInput
-              style={styles.input}
-              value={formData.circulation}
-              onChangeText={(text) => setFormData({...formData, circulation: text})}
-              placeholder="e.g., Normal, Weak, Absent pulses"
-              placeholderTextColor="#C7C7CC"
-            />
+            <View style={styles.buttonRow}>
+              {circulationOptions.map((option) => (
+                <TouchableOpacity
+                  key={option}
+                  style={[
+                    styles.optionButton,
+                    formData.circulation === option && styles.optionButtonActive
+                  ]}
+                  onPress={() => setFormData({...formData, circulation: option})}
+                >
+                  <Text style={[
+                    styles.optionButtonText,
+                    formData.circulation === option && styles.optionButtonTextActive
+                  ]}>
+                    {option}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            {formData.circulation === 'Custom' && (
+              <TextInput
+                style={[styles.input, styles.customInput]}
+                value={formData.circulation === 'Custom' ? '' : formData.circulation}
+                onChangeText={(text) => setFormData({...formData, circulation: text})}
+                placeholder="Enter custom circulation status"
+                placeholderTextColor="#C7C7CC"
+              />
+            )}
           </View>
         </View>
 
