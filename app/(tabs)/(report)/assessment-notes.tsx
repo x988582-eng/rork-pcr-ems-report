@@ -24,6 +24,7 @@ export default function AssessmentNotesScreen() {
 
   const locOptions = ['Alert', 'Verbal', 'Pain', 'Unresponsive'];
   const airwayOptions = ['Patent', 'Obstructed', 'Maintained', 'Custom'];
+  const breathingOptions = ['Normal', 'Labored', 'Absent', 'Custom'];
 
   return (
     <ScrollView style={styles.container}>
@@ -114,13 +115,34 @@ export default function AssessmentNotesScreen() {
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Breathing *</Text>
-            <TextInput
-              style={styles.input}
-              value={formData.breathing}
-              onChangeText={(text) => setFormData({...formData, breathing: text})}
-              placeholder="e.g., Normal, Labored, Absent"
-              placeholderTextColor="#C7C7CC"
-            />
+            <View style={styles.buttonRow}>
+              {breathingOptions.map((option) => (
+                <TouchableOpacity
+                  key={option}
+                  style={[
+                    styles.optionButton,
+                    formData.breathing === option && styles.optionButtonActive
+                  ]}
+                  onPress={() => setFormData({...formData, breathing: option})}
+                >
+                  <Text style={[
+                    styles.optionButtonText,
+                    formData.breathing === option && styles.optionButtonTextActive
+                  ]}>
+                    {option}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            {formData.breathing === 'Custom' && (
+              <TextInput
+                style={[styles.input, styles.customInput]}
+                value={formData.breathing === 'Custom' ? '' : formData.breathing}
+                onChangeText={(text) => setFormData({...formData, breathing: text})}
+                placeholder="Enter custom breathing status"
+                placeholderTextColor="#C7C7CC"
+              />
+            )}
           </View>
 
           <View style={styles.inputGroup}>
