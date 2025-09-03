@@ -84,7 +84,7 @@ export default function HistoryScreen() {
         <FlatList
           data={reports}
           renderItem={renderReport}
-          keyExtractor={(item, index) => item.id || `report-${index}`}
+          keyExtractor={(item, index) => item.id ? `report-${item.id}` : `report-${index}-${item.createdAt}`}
           contentContainerStyle={styles.list}
         />
       )}

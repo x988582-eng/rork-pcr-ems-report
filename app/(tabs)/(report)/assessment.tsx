@@ -31,10 +31,21 @@ export default function AssessmentScreen() {
       return;
     }
     
-    addVitalSigns({
+    // Default blank vital signs to "within normal limits"
+    const vitalsWithDefaults = {
       ...newVitals,
       time: new Date().toLocaleTimeString(),
-    });
+      bloodPressure: newVitals.bloodPressure || 'within normal limits',
+      pulse: newVitals.pulse || 'within normal limits',
+      respirations: newVitals.respirations || 'within normal limits',
+      spO2: newVitals.spO2 || 'within normal limits',
+      temperature: newVitals.temperature || 'within normal limits',
+      bloodGlucose: newVitals.bloodGlucose || 'within normal limits',
+      gcs: newVitals.gcs || 'within normal limits',
+      painScale: newVitals.painScale || 'within normal limits',
+    };
+    
+    addVitalSigns(vitalsWithDefaults);
     
     // Reset form
     setNewVitals({
