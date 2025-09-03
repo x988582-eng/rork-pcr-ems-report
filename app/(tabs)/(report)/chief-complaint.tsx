@@ -18,6 +18,41 @@ export default function ChiefComplaintScreen() {
     alleviatingFactors: currentReport.chiefComplaint?.alleviatingFactors || '',
   });
 
+  const formatTime = (input: string) => {
+    // Remove all non-numeric characters
+    const numbers = input.replace(/\D/g, '');
+    
+    if (numbers.length === 0) return '';
+    if (numbers.length <= 2) {
+      const hour = parseInt(numbers);
+      if (hour > 23) return '23:';
+      return numbers + ':';
+    }
+    if (numbers.length <= 4) {
+      const hour = parseInt(numbers.substring(0, 2));
+      const minute = parseInt(numbers.substring(2));
+      
+      const validHour = hour > 23 ? 23 : hour;
+      const validMinute = minute > 59 ? 59 : minute;
+      
+      return String(validHour).padStart(2, '0') + ':' + String(validMinute).padStart(2, '0');
+    }
+    
+    // If more than 4 digits, take first 4
+    const hour = parseInt(numbers.substring(0, 2));
+    const minute = parseInt(numbers.substring(2, 4));
+    
+    const validHour = hour > 23 ? 23 : hour;
+    const validMinute = minute > 59 ? 59 : minute;
+    
+    return String(validHour).padStart(2, '0') + ':' + String(validMinute).padStart(2, '0');
+  };
+
+  const handleOnsetChange = (text: string) => {
+    const formatted = formatTime(text);
+    setFormData({...formData, onset: formatted});
+  };
+
   const handleSave = () => {
     updateChiefComplaint(formData);
     router.back();
@@ -45,9 +80,11 @@ export default function ChiefComplaintScreen() {
             <TextInput
               style={styles.input}
               value={formData.onset}
-              onChangeText={(text) => setFormData({...formData, onset: text})}
-              placeholder="e.g., 2 hours ago"
+              onChangeText={handleOnsetChange}
+              placeholder="HH:MM (24-hr)"
               placeholderTextColor="#C7C7CC"
+              keyboardType="number-pad"
+              maxLength={5}
             />
           </View>
 
