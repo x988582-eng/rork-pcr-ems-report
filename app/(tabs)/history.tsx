@@ -11,13 +11,13 @@ export default function HistoryScreen() {
   const handleDelete = (report: PCRReport) => {
     Alert.alert(
       'Delete Report',
-      `Delete report ${report.dispatch?.dispatchTime || report.id}?`,
+      `Delete report from ${new Date(report.createdAt).toLocaleString()}?`,
       [
         { text: 'Cancel', style: 'cancel' },
         { 
           text: 'Delete', 
           style: 'destructive',
-          onPress: () => deleteReport(report.id)
+          onPress: () => deleteReport(report.createdAt)
         }
       ]
     );
@@ -39,7 +39,7 @@ export default function HistoryScreen() {
       </View>
       <View style={styles.reportContent}>
         <Text style={styles.reportTitle}>
-          {item.dispatch?.dispatchTime || `Report ${item.id.slice(-6)}`}
+          {item.dispatch?.dispatchTime || new Date(item.createdAt).toLocaleTimeString()}
         </Text>
         <Text style={styles.reportDate}>
           {new Date(item.createdAt).toLocaleDateString()} • {new Date(item.createdAt).toLocaleTimeString()}
@@ -84,7 +84,7 @@ export default function HistoryScreen() {
         <FlatList
           data={reports}
           renderItem={renderReport}
-          keyExtractor={(item, index) => item.id ? `report-${item.id}` : `report-${index}-${item.createdAt}`}
+          keyExtractor={(item) => `report-${item.createdAt}`}
           contentContainerStyle={styles.list}
         />
       )}

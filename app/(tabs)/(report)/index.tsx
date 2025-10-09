@@ -143,10 +143,6 @@ export default function ReportScreen() {
             {new Date(currentReport.createdAt || '').toLocaleString()}
           </Text>
         </View>
-        <View style={styles.statusRow}>
-          <Text style={styles.statusLabel}>Report ID:</Text>
-          <Text style={styles.statusValue}>{currentReport.id}</Text>
-        </View>
       </View>
     </ScrollView>
   );

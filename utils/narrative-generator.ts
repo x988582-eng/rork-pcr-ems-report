@@ -54,8 +54,7 @@ export function generateNarrative(report: Partial<PCRReport>): string {
   
   // Header
   sections.push('# PCR NARRATIVE REPORT');
-  sections.push(`\n**Generated:** ${new Date().toLocaleString()}`);
-  sections.push(`**Report ID:** ${report.id || 'N/A'}\n`);
+  sections.push(`\n**Generated:** ${new Date().toLocaleString()}\n`);
   sections.push('---\n');
   
   // 1. DISPATCH

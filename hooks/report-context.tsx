@@ -17,7 +17,6 @@ const STORAGE_KEY = 'pcr_reports';
 const CURRENT_REPORT_KEY = 'current_pcr_report';
 
 const createNewReport = (): Partial<PCRReport> => ({
-  id: Date.now().toString(),
   createdAt: new Date().toISOString(),
   dispatch: {
     dateTime: new Date().toISOString(),
@@ -207,7 +206,7 @@ export const [ReportProvider, useReport] = createContextHook(() => {
   }, [currentReport]);
 
   const saveReport = useCallback(async () => {
-    if (!currentReport.id) return;
+    if (!currentReport.createdAt) return;
     
     const reportToSave = currentReport as PCRReport;
     const updatedReports = [...reports, reportToSave];
@@ -224,8 +223,8 @@ export const [ReportProvider, useReport] = createContextHook(() => {
     }
   }, [currentReport, reports]);
 
-  const deleteReport = useCallback(async (id: string) => {
-    const updatedReports = reports.filter(r => r.id !== id);
+  const deleteReport = useCallback(async (createdAt: string) => {
+    const updatedReports = reports.filter(r => r.createdAt !== createdAt);
     setReports(updatedReports);
     
     try {

@@ -92,7 +92,6 @@ export interface Transport {
 }
 
 export interface PCRReport {
-  id: string;
   createdAt: string;
   dispatch: DispatchInfo;
   chiefComplaint: ChiefComplaint;

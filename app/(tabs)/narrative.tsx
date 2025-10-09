@@ -14,7 +14,7 @@ export default function NarrativeScreen() {
   };
 
   const handleShare = async () => {
-    const fileName = `PCR_${currentReport.id}_${new Date().toISOString().split('T')[0]}.md`;
+    const fileName = `PCR_${new Date(currentReport.createdAt || '').toISOString().replace(/[:.]/g, '-')}.md`;
     
     if (Platform.OS === 'web') {
       // Web download
