@@ -9,7 +9,7 @@ export default function AssessmentScreen() {
   const { currentReport, updateAssessment, addVitalSigns } = useReport();
   const router = useRouter();
   const [formData, setFormData] = useState({
-    physicalExam: currentReport.assessment?.physicalExam || '',
+    physicalExam: currentReport.assessment?.physicalExam || 'Rapid trauma assessment revealed',
     workingDiagnosis: currentReport.assessment?.workingDiagnosis || '',
   });
   
