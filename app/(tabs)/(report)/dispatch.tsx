@@ -14,6 +14,7 @@ export default function DispatchScreen() {
 
   const [formData, setFormData] = useState({
     unitNumber: currentReport.dispatch?.unitNumber || '112',
+    incidentNumber: currentReport.dispatch?.incidentNumber || '',
     dispatchTime: currentReport.dispatch?.dispatchTime || getCurrentDate(),
     location: currentReport.dispatch?.location || '',
     locationCustom: currentReport.dispatch?.locationCustom || '',
@@ -52,6 +53,17 @@ export default function DispatchScreen() {
             value={formData.unitNumber}
             onChangeText={(text) => setFormData({...formData, unitNumber: text})}
             placeholder="e.g., Medic 1"
+            placeholderTextColor="#C7C7CC"
+          />
+        </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Incident Number</Text>
+          <TextInput
+            style={styles.input}
+            value={formData.incidentNumber}
+            onChangeText={(text) => setFormData({...formData, incidentNumber: text})}
+            placeholder="e.g., 2024-001234"
             placeholderTextColor="#C7C7CC"
           />
         </View>

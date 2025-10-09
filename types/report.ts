@@ -1,6 +1,7 @@
 export interface DispatchInfo {
   dateTime: string;
   unitNumber: string;
+  incidentNumber: string;
   dispatchTime: string;
   location: string;
   locationCustom?: string;
